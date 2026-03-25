@@ -1,10 +1,10 @@
 // 导出图片功能
 // 功能：将全国所有地级市的颜色标记渲染成高分辨率 PNG 图片并下载
 // 输入：cityLevels（城市等级数据）
-// 输出：PNG 文件下载（2400x1600 分辨率）
+// 输出：PNG 文件下载（4800x3200 分辨率，SCALE=2 倍）
 // 依赖：d3-geo, constants.ts, GeoJSON: public/geojson/provinces/*.json
 // 在整个项目中起到何种作用：用户保存和分享个人制城成果的核心功能
-// 最后修改时间：2026-03-25
+// 最后修改时间：2026-03-25（SCALE=2 升级为 4800×3200）
 
 import { geoMercator, geoPath, type ExtendedFeatureCollection } from "d3-geo";
 import { LEVEL_COLORS, LEVELS, PROVINCES } from "@/lib/constants";
@@ -12,6 +12,7 @@ import type { CityLevels } from "@/types";
 
 const EXPORT_WIDTH = 2400;
 const EXPORT_HEIGHT = 1600;
+const SCALE = 2; // 物理像素倍率，最终输出 4800×3200
 
 // 全部 34 个省份的 adcode
 const ALL_PROVINCE_ADCODES = PROVINCES.map((p) => p.adcode);
@@ -141,7 +142,10 @@ export async function exportMapImage(cityLevels: CityLevels): Promise<void> {
   const mapSVGContent = renderMapSVG(geojson, cityLevels);
   const mapHeight = EXPORT_HEIGHT - 120;
 
-  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${EXPORT_WIDTH}" height="${mapHeight}" viewBox="0 0 ${EXPORT_WIDTH} ${mapHeight}">
+  // SVG 按 SCALE 倍渲染，保证矢量清晰
+  const svgW = EXPORT_WIDTH * SCALE;
+  const svgH = mapHeight * SCALE;
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}" viewBox="0 0 ${EXPORT_WIDTH} ${mapHeight}">
   <rect width="${EXPORT_WIDTH}" height="${mapHeight}" fill="#f0f4f8"/>
   ${mapSVGContent}
 </svg>`;
@@ -154,16 +158,19 @@ export async function exportMapImage(cityLevels: CityLevels): Promise<void> {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement("canvas");
-      canvas.width = EXPORT_WIDTH;
-      canvas.height = EXPORT_HEIGHT;
+      canvas.width = EXPORT_WIDTH * SCALE;
+      canvas.height = EXPORT_HEIGHT * SCALE;
       const ctx = canvas.getContext("2d")!;
 
       // 背景
       ctx.fillStyle = "#f0f4f8";
-      ctx.fillRect(0, 0, EXPORT_WIDTH, EXPORT_HEIGHT);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 绘制地图
-      ctx.drawImage(img, 0, 0, EXPORT_WIDTH, mapHeight);
+      // 绘制地图（SVG 已是 SCALE 倍尺寸，1:1 绘制）
+      ctx.drawImage(img, 0, 0, svgW, svgH);
+
+      // 后续 overlay 绘制坐标保持逻辑尺寸，用 scale 放大
+      ctx.scale(SCALE, SCALE);
 
       // 统计
       const visited = Object.values(cityLevels).filter((l) => l > 0).length;
