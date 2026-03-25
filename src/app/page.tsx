@@ -211,7 +211,7 @@ export default function HomePage() {
         href="https://github.com/28H2O2/china-city/issues/new"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 right-5 flex items-center gap-1.5 px-3 py-2 text-xs transition-colors"
+        className="fixed bottom-20 right-5 flex items-center gap-1.5 px-3 py-2 text-xs transition-colors"
         style={{
           background: "var(--bg-panel)",
           border: "1px solid var(--border-main)",
