@@ -1,7 +1,8 @@
 # 待办事项
 
 ## 反馈系统
-- [ ] 使用者（即使是使用vercel部署的），也可以直接提交issue给我，想想怎么实现
+- [x] **GitHub Issues 直链**：页面右下角悬浮「反馈」按钮，点击跳转到 GitHub Issues 新建页面
+- [ ] **Formspree 表单**：用户无需 GitHub 账号，填写后直接发邮件到作者邮箱。去 formspree.io 注册，拿到 endpoint（`https://formspree.io/f/xxxxxxxx`），替换页面中的 GitHub 链接，改为 modal + fetch POST 提交
 
 ## 地图数据
 
@@ -18,7 +19,9 @@
 
 ## 视觉与功能
 
+- [ ] 生成整体图，中国整体太靠上，也是三沙那边导致的
 - [ ] **深色模式**：CSS 变量已设计为可切换，需增加深色配色方案和切换按钮
 - [ ] **README 示例截图**：添加项目截图到 README，展示全国视图和省级视图效果
 - [ ] **Open Graph 预览图**：生成 OG 图片，分享到社交媒体时展示更好的预览
 - [ ] **PWA 支持**：添加 manifest.json 和 Service Worker，支持离线使用和添加到主屏幕
+

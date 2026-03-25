@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-25 - 悬浮反馈按钮
+
+### 新增
+- 页面右下角悬浮「反馈 / Issue」按钮，点击跳转 GitHub Issues 新建页面
+- `docs/TODO.md` 补充 Formspree 表单方案待办（无需 GitHub 账号的反馈方式）
+
 ## 2026-03-25 - 代码清理
 
 ### 优化
