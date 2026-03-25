@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* ====================================================
+   中华历史风格 CSS 变量
+   参考：宋代舆图 + 明清绢本 + 传统典籍装帧
+   ==================================================== */
+:root {
+  /* 背景色系 */
+  --bg-page: #F5EDD6;        /* 竹黄：宣纸底色 */
+  --bg-panel: #FAF6EC;       /* 素白：面板背景 */
+  --bg-hover: #EDE5CF;       /* 悬停底色 */
+  --bg-map: #E8F0F5;         /* 天水蓝：地图底色（仿水域） */
+
+  /* 文字色系 */
+  --text-primary: #2C2416;   /* 墨色：主文字 */
+  --text-secondary: #7A6850; /* 褐灰：次要文字 */
+  --text-muted: #A89880;     /* 浅褐：提示文字 */
+
+  /* 边框色系 */
+  --border-main: #C8BAA0;    /* 淡墨：主边框 */
+  --border-dark: #8C7A60;    /* 深墨：强调边框 */
+
+  /* 强调色 */
+  --accent: #C0472A;         /* 朱砂：主按钮、强调 */
+  --accent-hover: #9A3620;   /* 深朱：悬停态 */
+  --accent-blue: #4A6475;    /* 青黛：次要链接 */
+}
+
+/* 全局字体 */
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: "Noto Serif SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", serif;
+}
+
+/* 地图路径悬停效果 */
+.map-path {
+  cursor: pointer;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+.map-path:hover {
+  opacity: 0.78;
+  filter: brightness(0.92);
+}
+
+/* 等级选择面板 */
+.level-selector {
+  position: fixed;
+  z-index: 100;
+  background: var(--bg-panel);
+  border-radius: 4px;
+  border: 1px solid var(--border-main);
+  box-shadow: 0 6px 30px rgba(44, 36, 22, 0.18), 0 2px 8px rgba(44, 36, 22, 0.1);
+  padding: 10px;
+  min-width: 158px;
+}
+
+.level-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-size: 13px;
+  font-family: "Noto Serif SC", serif;
+  color: var(--text-primary);
+}
+.level-option:hover {
+  background: var(--bg-hover);
+}
+.level-option.selected {
+  background: var(--bg-hover);
+  font-weight: 700;
+}
+
+/* 颜色圆点：方形印章风格 */
+.color-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  border: 1px solid rgba(44, 36, 22, 0.2);
+  flex-shrink: 0;
+}
+
+/* 装饰性分隔线（两端菱形） */
+.divider-ornate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--border-main);
+  font-size: 10px;
+}
+.divider-ornate::before,
+.divider-ornate::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-main);
+}
