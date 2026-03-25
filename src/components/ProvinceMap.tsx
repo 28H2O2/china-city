@@ -79,15 +79,22 @@ export function ProvinceMap({
 
   return (
     <div className="flex flex-col h-full">
-      {/* 顶部导航栏：左侧返回按钮 + 面包屑 */}
+      {/* 顶部导航栏：左侧面包屑 + 右侧返回按钮 */}
       <div
-        className="flex items-center gap-3 px-3 py-2 text-sm shrink-0"
+        className="flex items-center justify-between px-3 py-2 text-sm shrink-0"
         style={{
           background: "var(--bg-panel)",
           borderBottom: "1px solid var(--border-main)",
           fontFamily: "var(--font-serif), serif",
         }}
       >
+        {/* 左侧面包屑 */}
+        <div className="flex items-center gap-2">
+          <span style={{ color: "var(--text-muted)" }}>全国</span>
+          <span style={{ color: "var(--border-dark)" }}>›</span>
+          <span className="font-bold" style={{ color: "var(--text-primary)" }}>{provinceName}</span>
+        </div>
+        {/* 右侧返回按钮 */}
         <button
           onClick={onBack}
           className="flex items-center gap-1.5 px-2.5 py-1 shrink-0 transition-colors cursor-pointer"
@@ -113,8 +120,6 @@ export function ProvinceMap({
           </svg>
           返回全国
         </button>
-        <span style={{ color: "var(--border-dark)" }}>›</span>
-        <span className="font-bold" style={{ color: "var(--text-primary)" }}>{provinceName}</span>
       </div>
 
       {/* 地图区域 */}

@@ -1,6 +1,6 @@
 // URL 分享码编解码
-// 功能：将333个城市的等级数据压缩为 ~168 字符的 Base64url 字符串，用于 URL hash 分享
-// 编码方式：每个城市等级（0-5）占 3 bit，333 城市 = 999 bit = 125 字节，再做 Base64url 编码
+// 功能：将436个城市的等级数据压缩为 ~218 字符的 Base64url 字符串，用于 URL hash 分享
+// 编码方式：每个城市等级（0-5）占 3 bit，436 城市 = 1308 bit = 164 字节，再做 Base64url 编码
 // 输入：CityLevels 对象（adcode → level 映射）
 // 输出：~168 字符 Base64url 字符串，或解码后的 CityLevels 对象
 // 最后修改时间：2026-03-24
@@ -14,7 +14,7 @@ const BASE64_CHARS =
 
 // 将城市等级数据编码为 Base64url 字符串
 export function encodeShareCode(cityLevels: CityLevels): string {
-  const n = SORTED_CITY_ADCODES.length; // 333
+  const n = SORTED_CITY_ADCODES.length;
   // 每个 level 3 bit，共 n*3 bit，向上取整为字节数
   const byteLen = Math.ceil((n * 3) / 8);
   const bytes = new Uint8Array(byteLen);
