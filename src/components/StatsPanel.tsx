@@ -1,3 +1,11 @@
+// 统计面板组件
+// 功能：展示已访城市数、总分、覆盖率进度条、各等级分布柱状图
+// 输入：stats（StatsInfo 对象，来自 useCityLevels.getStats()）
+// 输出：统计数据 DOM
+// 依赖：constants.ts (LEVELS), types (StatsInfo)
+// 在整个项目中起到何种作用：桌面端右侧面板的统计信息展示
+// 最后修改时间：2026-03-25
+
 "use client";
 
 import { LEVELS } from "@/lib/constants";

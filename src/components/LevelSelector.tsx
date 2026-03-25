@@ -1,3 +1,11 @@
+// 等级选择面板组件
+// 功能：点击城市后弹出的浮动面板，显示城市名和6个等级选项供用户选择
+// 输入：cityName 城市名、currentLevel 当前等级、position 弹出位置、onSelect/onClose 回调
+// 输出：fixed 定位的浮动面板 DOM
+// 依赖：constants.ts (LEVELS), types (Level)
+// 在整个项目中起到何种作用：用户设置城市访问等级的核心交互组件
+// 最后修改时间：2026-03-25
+
 "use client";
 
 import { useEffect, useRef } from "react";

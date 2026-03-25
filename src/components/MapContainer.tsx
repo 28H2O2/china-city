@@ -14,9 +14,6 @@ import { ProvinceMap } from "@/components/ProvinceMap";
 import { LevelSelector } from "@/components/LevelSelector";
 import type { ViewState, Level, CityLevels } from "@/types";
 
-// 直辖市：adcode 与 provinceAdcode 相同，点击后直接弹等级选择面板
-const MUNICIPALITIES = new Set(["110000", "120000", "310000", "500000"]);
-
 interface SelectorState {
   adcode: string;
   name: string;
@@ -34,14 +31,9 @@ export function MapContainer({ cityLevels, setLevel, getProvinceMaxLevel }: Prop
   const [selector, setSelector] = useState<SelectorState | null>(null);
 
   const handleProvinceClick = useCallback(
-    (adcode: string, name: string, position: { x: number; y: number }) => {
+    (adcode: string, name: string) => {
       setSelector(null);
-      if (MUNICIPALITIES.has(adcode)) {
-        // 直辖市直接弹等级选择面板，adcode 即城市 adcode
-        setSelector({ adcode, name, position });
-      } else {
-        setView({ type: "province", adcode, name });
-      }
+      setView({ type: "province", adcode, name });
     },
     []
   );

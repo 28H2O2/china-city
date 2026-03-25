@@ -1,19 +1,49 @@
 // 城市元数据
-// 功能：存储333个地级行政区的 adcode、名称、所属省份信息
+// 功能：存储415个地级/区级行政区的 adcode、名称、所属省份信息（含4个直辖市的区级数据）
 // 输入：无（静态数据）
 // 输出：CITIES 数组、SORTED_CITY_ADCODES 数组（按 adcode 升序排列，用于分享码编解码）
 // 依赖：无
 // 在整个项目中起到何种作用：所有组件的城市数据基础，分享码编解码依赖此排序
-// 最后修改时间：2026-03-24
+// 最后修改时间：2026-03-25
 
 import type { CityInfo } from "@/types";
 
 // 333个地级行政区完整数据（adcode 升序排列）
 export const CITIES: CityInfo[] = [
-  // 北京市（直辖市，全市作为一个地级区划）
-  { adcode: "110000", name: "北京市", provinceAdcode: "110000" },
-  // 天津市（直辖市）
-  { adcode: "120000", name: "天津市", provinceAdcode: "120000" },
+  // 北京市（直辖市，16个区独立追踪）
+  { adcode: "110101", name: "东城区", provinceAdcode: "110000" },
+  { adcode: "110102", name: "西城区", provinceAdcode: "110000" },
+  { adcode: "110105", name: "朝阳区", provinceAdcode: "110000" },
+  { adcode: "110106", name: "丰台区", provinceAdcode: "110000" },
+  { adcode: "110107", name: "石景山区", provinceAdcode: "110000" },
+  { adcode: "110108", name: "海淀区", provinceAdcode: "110000" },
+  { adcode: "110109", name: "门头沟区", provinceAdcode: "110000" },
+  { adcode: "110111", name: "房山区", provinceAdcode: "110000" },
+  { adcode: "110112", name: "通州区", provinceAdcode: "110000" },
+  { adcode: "110113", name: "顺义区", provinceAdcode: "110000" },
+  { adcode: "110114", name: "昌平区", provinceAdcode: "110000" },
+  { adcode: "110115", name: "大兴区", provinceAdcode: "110000" },
+  { adcode: "110116", name: "怀柔区", provinceAdcode: "110000" },
+  { adcode: "110117", name: "平谷区", provinceAdcode: "110000" },
+  { adcode: "110118", name: "密云区", provinceAdcode: "110000" },
+  { adcode: "110119", name: "延庆区", provinceAdcode: "110000" },
+  // 天津市（直辖市，16个区独立追踪）
+  { adcode: "120101", name: "和平区", provinceAdcode: "120000" },
+  { adcode: "120102", name: "河东区", provinceAdcode: "120000" },
+  { adcode: "120103", name: "河西区", provinceAdcode: "120000" },
+  { adcode: "120104", name: "南开区", provinceAdcode: "120000" },
+  { adcode: "120105", name: "河北区", provinceAdcode: "120000" },
+  { adcode: "120106", name: "红桥区", provinceAdcode: "120000" },
+  { adcode: "120110", name: "东丽区", provinceAdcode: "120000" },
+  { adcode: "120111", name: "西青区", provinceAdcode: "120000" },
+  { adcode: "120112", name: "津南区", provinceAdcode: "120000" },
+  { adcode: "120113", name: "北辰区", provinceAdcode: "120000" },
+  { adcode: "120114", name: "武清区", provinceAdcode: "120000" },
+  { adcode: "120115", name: "宝坻区", provinceAdcode: "120000" },
+  { adcode: "120116", name: "滨海新区", provinceAdcode: "120000" },
+  { adcode: "120117", name: "宁河区", provinceAdcode: "120000" },
+  { adcode: "120118", name: "静海区", provinceAdcode: "120000" },
+  { adcode: "120119", name: "蓟州区", provinceAdcode: "120000" },
   // 河北省 (11)
   { adcode: "130100", name: "石家庄市", provinceAdcode: "130000" },
   { adcode: "130200", name: "唐山市", provinceAdcode: "130000" },
@@ -90,8 +120,23 @@ export const CITIES: CityInfo[] = [
   { adcode: "231100", name: "黑河市", provinceAdcode: "230000" },
   { adcode: "231200", name: "绥化市", provinceAdcode: "230000" },
   { adcode: "232700", name: "大兴安岭地区", provinceAdcode: "230000" },
-  // 上海市（直辖市）
-  { adcode: "310000", name: "上海市", provinceAdcode: "310000" },
+  // 上海市（直辖市，16个区独立追踪）
+  { adcode: "310101", name: "黄浦区", provinceAdcode: "310000" },
+  { adcode: "310104", name: "徐汇区", provinceAdcode: "310000" },
+  { adcode: "310105", name: "长宁区", provinceAdcode: "310000" },
+  { adcode: "310106", name: "静安区", provinceAdcode: "310000" },
+  { adcode: "310107", name: "普陀区", provinceAdcode: "310000" },
+  { adcode: "310109", name: "虹口区", provinceAdcode: "310000" },
+  { adcode: "310110", name: "杨浦区", provinceAdcode: "310000" },
+  { adcode: "310112", name: "闵行区", provinceAdcode: "310000" },
+  { adcode: "310113", name: "宝山区", provinceAdcode: "310000" },
+  { adcode: "310114", name: "嘉定区", provinceAdcode: "310000" },
+  { adcode: "310115", name: "浦东新区", provinceAdcode: "310000" },
+  { adcode: "310116", name: "金山区", provinceAdcode: "310000" },
+  { adcode: "310117", name: "松江区", provinceAdcode: "310000" },
+  { adcode: "310118", name: "青浦区", provinceAdcode: "310000" },
+  { adcode: "310120", name: "奉贤区", provinceAdcode: "310000" },
+  { adcode: "310151", name: "崇明区", provinceAdcode: "310000" },
   // 江苏省 (13)
   { adcode: "320100", name: "南京市", provinceAdcode: "320000" },
   { adcode: "320200", name: "无锡市", provinceAdcode: "320000" },
@@ -264,8 +309,45 @@ export const CITIES: CityInfo[] = [
   { adcode: "460200", name: "三亚市", provinceAdcode: "460000" },
   { adcode: "460300", name: "三沙市", provinceAdcode: "460000" },
   { adcode: "460400", name: "儋州市", provinceAdcode: "460000" },
-  // 重庆市（直辖市）
-  { adcode: "500000", name: "重庆市", provinceAdcode: "500000" },
+  // 重庆市（直辖市，38个区县独立追踪）
+  { adcode: "500101", name: "万州区", provinceAdcode: "500000" },
+  { adcode: "500102", name: "涪陵区", provinceAdcode: "500000" },
+  { adcode: "500103", name: "渝中区", provinceAdcode: "500000" },
+  { adcode: "500104", name: "大渡口区", provinceAdcode: "500000" },
+  { adcode: "500105", name: "江北区", provinceAdcode: "500000" },
+  { adcode: "500106", name: "沙坪坝区", provinceAdcode: "500000" },
+  { adcode: "500107", name: "九龙坡区", provinceAdcode: "500000" },
+  { adcode: "500108", name: "南岸区", provinceAdcode: "500000" },
+  { adcode: "500109", name: "北碚区", provinceAdcode: "500000" },
+  { adcode: "500110", name: "綦江区", provinceAdcode: "500000" },
+  { adcode: "500111", name: "大足区", provinceAdcode: "500000" },
+  { adcode: "500112", name: "渝北区", provinceAdcode: "500000" },
+  { adcode: "500113", name: "巴南区", provinceAdcode: "500000" },
+  { adcode: "500114", name: "黔江区", provinceAdcode: "500000" },
+  { adcode: "500115", name: "长寿区", provinceAdcode: "500000" },
+  { adcode: "500116", name: "江津区", provinceAdcode: "500000" },
+  { adcode: "500117", name: "合川区", provinceAdcode: "500000" },
+  { adcode: "500118", name: "永川区", provinceAdcode: "500000" },
+  { adcode: "500119", name: "南川区", provinceAdcode: "500000" },
+  { adcode: "500120", name: "璧山区", provinceAdcode: "500000" },
+  { adcode: "500151", name: "铜梁区", provinceAdcode: "500000" },
+  { adcode: "500152", name: "潼南区", provinceAdcode: "500000" },
+  { adcode: "500153", name: "荣昌区", provinceAdcode: "500000" },
+  { adcode: "500154", name: "开州区", provinceAdcode: "500000" },
+  { adcode: "500155", name: "梁平区", provinceAdcode: "500000" },
+  { adcode: "500156", name: "武隆区", provinceAdcode: "500000" },
+  { adcode: "500229", name: "城口县", provinceAdcode: "500000" },
+  { adcode: "500230", name: "丰都县", provinceAdcode: "500000" },
+  { adcode: "500231", name: "垫江县", provinceAdcode: "500000" },
+  { adcode: "500233", name: "忠县", provinceAdcode: "500000" },
+  { adcode: "500235", name: "云阳县", provinceAdcode: "500000" },
+  { adcode: "500236", name: "奉节县", provinceAdcode: "500000" },
+  { adcode: "500237", name: "巫山县", provinceAdcode: "500000" },
+  { adcode: "500238", name: "巫溪县", provinceAdcode: "500000" },
+  { adcode: "500240", name: "石柱土家族自治县", provinceAdcode: "500000" },
+  { adcode: "500241", name: "秀山苗族土家族自治县", provinceAdcode: "500000" },
+  { adcode: "500242", name: "酉阳土家族苗族自治县", provinceAdcode: "500000" },
+  { adcode: "500243", name: "彭水苗族土家族自治县", provinceAdcode: "500000" },
   // 四川省 (21)
   { adcode: "510100", name: "成都市", provinceAdcode: "510000" },
   { adcode: "510300", name: "自贡市", provinceAdcode: "510000" },

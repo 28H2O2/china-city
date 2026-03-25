@@ -9,9 +9,13 @@
 "use client";
 
 import { useRef, useEffect, useState, useMemo } from "react";
+import { geoMercator, geoPath, type GeoPermissibleObjects, type ExtendedFeatureCollection } from "d3-geo";
 import { useD3Map } from "@/hooks/useD3Map";
 import { LEVEL_COLORS } from "@/lib/constants";
 import type { Level } from "@/types";
+
+// 港澳 adcode
+const HK_MACAU = new Set(["810000", "820000"]);
 
 interface Feature {
   type: string;
@@ -30,7 +34,7 @@ interface GeoJson {
 }
 
 interface Props {
-  onProvinceClick: (adcode: string, name: string, position: { x: number; y: number }) => void;
+  onProvinceClick: (adcode: string, name: string) => void;
   getProvinceMaxLevel: (adcode: string) => Level;
 }
 
@@ -55,6 +59,33 @@ export function ChinaMap({ onProvinceClick, getProvinceMaxLevel }: Props) {
   );
 
   const { pathFn, width, height } = useD3Map(geojson, containerRef);
+
+  // 港澳放大 inset map 的投影和 path 数据
+  const inset = useMemo(() => {
+    if (!geojson || width === 0 || height === 0) return null;
+    const hkMacauFeatures = geojson.features.filter((f) =>
+      HK_MACAU.has(String(f.properties.adcode))
+    );
+    if (hkMacauFeatures.length === 0) return null;
+
+    const insetW = Math.min(140, width * 0.2);
+    const insetH = insetW * 0.9;
+    const padding = 8;
+    const insetGeo = { type: "FeatureCollection", features: hkMacauFeatures };
+    const projection = geoMercator().fitExtent(
+      [[padding, padding], [insetW - padding, insetH - padding]],
+      insetGeo as unknown as ExtendedFeatureCollection
+    );
+    const gen = geoPath().projection(projection);
+
+    const paths = hkMacauFeatures.map((f) => ({
+      adcode: String(f.properties.adcode),
+      name: f.properties.name,
+      d: gen(f as unknown as GeoPermissibleObjects) ?? "",
+    }));
+
+    return { paths, w: insetW, h: insetH, x: width - insetW - 10, y: height - insetH - 10 };
+  }, [geojson, width, height]);
 
   useEffect(() => {
     fetch("/geojson/china.json")
@@ -92,7 +123,7 @@ export function ChinaMap({ onProvinceClick, getProvinceMaxLevel }: Props) {
                   className="map-path"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onProvinceClick(adcode, name, { x: e.clientX, y: e.clientY });
+                    onProvinceClick(adcode, name);
                   }}
                 >
                   <title>{name}</title>
@@ -100,6 +131,46 @@ export function ChinaMap({ onProvinceClick, getProvinceMaxLevel }: Props) {
               );
             })}
           </g>
+
+          {/* 港澳放大插图 */}
+          {inset && (
+            <g transform={`translate(${inset.x}, ${inset.y})`}>
+              <rect
+                x={0} y={0} width={inset.w} height={inset.h}
+                fill="var(--bg-map)" stroke="var(--border-dark)" strokeWidth={1}
+                rx={2}
+              />
+              <text
+                x={inset.w / 2} y={12}
+                textAnchor="middle"
+                fill="var(--text-secondary)"
+                fontSize={9}
+                fontFamily="var(--font-serif), serif"
+              >
+                港 · 澳
+              </text>
+              {inset.paths.map(({ adcode, name, d }) => {
+                const level = getProvinceMaxLevel(adcode);
+                const fill = LEVEL_COLORS[level];
+                return (
+                  <path
+                    key={`inset-${adcode}`}
+                    d={d}
+                    fill={fill}
+                    stroke="#666"
+                    strokeWidth={0.5}
+                    className="map-path"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onProvinceClick(adcode, name);
+                    }}
+                  >
+                    <title>{name}（放大）</title>
+                  </path>
+                );
+              })}
+            </g>
+          )}
         </svg>
       ) : (
         <div className="flex items-center justify-center h-full text-gray-400">

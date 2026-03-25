@@ -38,42 +38,64 @@ export default function HomePage() {
     <div className="flex flex-col h-screen" style={{ background: "var(--bg-page)" }}>
       {/* 顶部标题栏 */}
       <header
-        className="flex items-center justify-between px-5 py-2.5 shrink-0"
+        className="flex items-center justify-between shrink-0 overflow-hidden"
         style={{
           background: "var(--bg-panel)",
           borderBottom: "1px solid var(--border-main)",
         }}
       >
-        <div className="flex items-center gap-3">
-          {/* 装饰菱形 */}
+        {/* 左侧朱砂竖条 + 标题 */}
+        <div className="flex items-center gap-0">
+          {/* 朱砂竖条（参考 uzbekistan-travel.html 的 left strip 设计） */}
           <div
-            className="w-4 h-4 rotate-45 shrink-0"
-            style={{ background: "var(--accent)", opacity: 0.85 }}
+            className="w-3 self-stretch shrink-0"
+            style={{ background: "var(--accent)" }}
           />
-          <div>
-            <h1
-              className="text-xl font-bold leading-tight tracking-wider"
-              style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
-            >
-              中国制城
-            </h1>
-            <p className="text-xs tracking-[0.15em]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-sans), sans-serif" }}>
-              China City Level Map
-            </p>
+          <div className="flex items-center gap-3 px-4 py-2.5">
+            <div>
+              {/* eyebrow 小标签：参考 HTML 的 .eyebrow 样式 */}
+              <div
+                className="text-xs tracking-[0.3em] uppercase mb-0.5"
+                style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
+              >
+                China City Map
+              </div>
+              <h1
+                className="text-xl font-bold leading-tight tracking-wider"
+                style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
+              >
+                中国制城
+              </h1>
+            </div>
           </div>
         </div>
-        <Toolbar
-          getShareUrl={getShareUrl}
-          onExport={handleExport}
-          onReset={resetAll}
-        />
+
+        {/* 右侧：H2O2 署名 + 工具栏 */}
+        <div className="flex items-center gap-4 px-4">
+          <span
+            className="text-xs hidden sm:block"
+            style={{
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-display), var(--font-sans), sans-serif",
+              fontStyle: "italic",
+              letterSpacing: "0.05em",
+            }}
+          >
+            by H₂O₂
+          </span>
+          <Toolbar
+            getShareUrl={getShareUrl}
+            onExport={handleExport}
+            onReset={resetAll}
+          />
+        </div>
       </header>
 
       {/* 主内容区 */}
       <div className="flex flex-1 min-h-0">
         {/* 地图区域 */}
         <main className="flex-1 min-w-0 h-full relative p-3">
-          {/* 装饰框 */}
+          {/* 装饰双框 */}
           <div
             className="w-full h-full relative"
             style={{
@@ -92,57 +114,88 @@ export default function HomePage() {
 
         {/* 右侧面板（桌面端） */}
         <aside
-          className="hidden lg:flex flex-col w-64 p-4 gap-4 shrink-0"
+          className="hidden lg:flex flex-col w-64 shrink-0"
           style={{
             background: "var(--bg-panel)",
             borderLeft: "1px solid var(--border-main)",
           }}
         >
-          {/* 小标题 */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div
-                className="w-2.5 h-2.5 rotate-45 shrink-0"
-                style={{ background: "var(--accent)" }}
-              />
-              <span
-                className="text-xs font-bold tracking-widest uppercase"
-                style={{ color: "var(--text-secondary)", fontFamily: "var(--font-serif), serif" }}
-              >
-                访问统计
-              </span>
+          {/* 顶部朱砂细条（与 header 左竖条呼应） */}
+          <div style={{ height: "3px", background: "var(--accent)", opacity: 0.6 }} />
+
+          <div className="flex flex-col gap-4 p-4 flex-1 min-h-0 overflow-auto">
+            {/* 访问统计 */}
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="h-px flex-1" style={{ background: "var(--accent)", opacity: 0.4 }} />
+                <span
+                  className="text-xs tracking-widest uppercase px-1"
+                  style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
+                >
+                  访问统计
+                </span>
+                <div className="h-px flex-1" style={{ background: "var(--accent)", opacity: 0.4 }} />
+              </div>
+              <StatsPanel stats={stats} />
             </div>
-            <StatsPanel stats={stats} />
-          </div>
 
-          {/* 分隔 */}
-          <div style={{ borderTop: "1px solid var(--border-main)" }} />
+            <div style={{ borderTop: "1px solid var(--border-main)" }} />
 
-          {/* 图例 */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div
-                className="w-2.5 h-2.5 rotate-45 shrink-0"
-                style={{ background: "var(--accent)" }}
-              />
-              <span
-                className="text-xs font-bold tracking-widest"
-                style={{ color: "var(--text-secondary)", fontFamily: "var(--font-serif), serif" }}
-              >
-                图例
-              </span>
+            {/* 图例 */}
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <div className="h-px flex-1" style={{ background: "var(--border-main)" }} />
+                <span
+                  className="text-xs tracking-widest uppercase px-1"
+                  style={{ color: "var(--text-secondary)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
+                >
+                  图例
+                </span>
+                <div className="h-px flex-1" style={{ background: "var(--border-main)" }} />
+              </div>
+              <Legend />
             </div>
-            <Legend />
-          </div>
 
-          {/* 使用提示 */}
-          <div
-            className="mt-auto text-xs leading-6"
-            style={{ color: "var(--text-muted)", fontFamily: "var(--font-serif), serif" }}
-          >
-            <p>· 点击省份，览城而入</p>
-            <p>· 点击城市，记录到访</p>
-            <p>· 数据存于本地，长久保存</p>
+            <div style={{ borderTop: "1px solid var(--border-main)" }} />
+
+            {/* 使用提示 */}
+            <div
+              className="text-xs leading-6"
+              style={{ color: "var(--text-muted)", fontFamily: "var(--font-serif), serif" }}
+            >
+              <p>· 点击省份，览城而入</p>
+              <p>· 点击城市，记录到访</p>
+              <p>· 数据存于本地，长久保存</p>
+            </div>
+
+            {/* 哲理名言 */}
+            <div
+              className="mt-auto pt-3"
+              style={{ borderTop: "1px solid var(--border-main)" }}
+            >
+              <p
+                className="text-xs leading-relaxed"
+                style={{
+                  color: "var(--text-muted)",
+                  fontFamily: "var(--font-display), serif",
+                  fontStyle: "italic",
+                  fontWeight: 300,
+                  letterSpacing: "0.02em",
+                }}
+              >
+                "Not all those who wander are lost."
+              </p>
+              <p
+                className="text-xs mt-1"
+                style={{
+                  color: "var(--border-dark)",
+                  fontFamily: "var(--font-serif), serif",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                ——人生苦短，脚步不停
+              </p>
+            </div>
           </div>
         </aside>
       </div>

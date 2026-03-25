@@ -1,9 +1,9 @@
-// 省内地级市地图组件
-// 功能：渲染指定省份的地级市地图，支持点击城市切换访问等级
+// 省内地级市/区级地图组件
+// 功能：渲染指定省份的地级市（或直辖市区级）地图，支持点击城市切换访问等级
 // 输入：provinceAdcode/name、cityLevels、onCityClick 回调、onBack 返回回调
-// 输出：SVG 地图元素 + 顶部面包屑导航
+// 输出：SVG 地图元素 + 顶部面包屑导航（含返回全国按钮）
 // 依赖：useD3Map, constants.ts, GeoJSON: public/geojson/provinces/{adcode}.json
-// 在整个项目中起到何种作用：用户进入省级视图后查看和编辑各地级市的访问等级
+// 在整个项目中起到何种作用：用户进入省级视图后查看和编辑各地级市/区的访问等级
 // 最后修改时间：2026-03-25
 
 "use client";
@@ -47,16 +47,14 @@ export function ProvinceMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const [rawGeoJson, setRawGeoJson] = useState<GeoJson | null>(null);
 
-  // 过滤只保留地级市级别的 feature（level 字段为 city/district，或通过 adcode 判断）
+  // 过滤掉省级自身 feature（末4位为0000），只保留地级市/区级
   const geojson = useMemo(() => {
     if (!rawGeoJson) return null;
-    // 过滤省级自身的 feature（adcode 末4位为0000，如 440000），只保留地级市
-    const cities = rawGeoJson.features.filter((f) => {
+    const filtered = rawGeoJson.features.filter((f) => {
       const adcode = String(f.properties.adcode);
-      // 地级市 adcode 格式：前2位省代码 + 后4位非全0
       return /^\d{6}$/.test(adcode) && adcode !== provinceAdcode;
     });
-    return { ...rawGeoJson, features: cities };
+    return { ...rawGeoJson, features: filtered };
   }, [rawGeoJson, provinceAdcode]);
 
   const { pathFn, width, height } = useD3Map(geojson, containerRef);
@@ -69,20 +67,16 @@ export function ProvinceMap({
       .catch(console.error);
   }, [provinceAdcode]);
 
-  const handleCityClick = (
-    e: React.MouseEvent,
-    adcode: string,
-    name: string
-  ) => {
+  const handleCityClick = (e: React.MouseEvent, adcode: string, name: string) => {
     e.stopPropagation();
     onCityClick(adcode, name, { x: e.clientX, y: e.clientY });
   };
 
   return (
     <div className="flex flex-col h-full">
-      {/* 面包屑导航 */}
+      {/* 顶部导航栏：左侧返回按钮 + 面包屑 */}
       <div
-        className="flex items-center gap-2 px-4 py-2 text-sm shrink-0"
+        className="flex items-center gap-3 px-3 py-2 text-sm shrink-0"
         style={{
           background: "var(--bg-panel)",
           borderBottom: "1px solid var(--border-main)",
@@ -91,15 +85,28 @@ export function ProvinceMap({
       >
         <button
           onClick={onBack}
-          className="flex items-center gap-1 transition-colors"
-          style={{ color: "var(--accent-blue)" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--accent-blue)")}
+          className="flex items-center gap-1.5 px-2.5 py-1 shrink-0 transition-colors cursor-pointer"
+          style={{
+            color: "var(--accent-blue)",
+            border: "1px solid var(--border-main)",
+            borderRadius: "3px",
+            background: "transparent",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--bg-hover)";
+            e.currentTarget.style.color = "var(--accent)";
+            e.currentTarget.style.borderColor = "var(--accent)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--accent-blue)";
+            e.currentTarget.style.borderColor = "var(--border-main)";
+          }}
         >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
             <path d="M10.707 13.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L6.414 8l4.293 4.293a1 1 0 010 1.414z" />
           </svg>
-          全国
+          返回全国
         </button>
         <span style={{ color: "var(--border-dark)" }}>›</span>
         <span className="font-bold" style={{ color: "var(--text-primary)" }}>{provinceName}</span>
@@ -141,7 +148,7 @@ export function ProvinceMap({
             </g>
           </svg>
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
+          <div className="flex items-center justify-center h-full" style={{ color: "var(--text-muted)" }}>
             {rawGeoJson ? "渲染中..." : `加载 ${provinceName} 数据中...`}
           </div>
         )}
