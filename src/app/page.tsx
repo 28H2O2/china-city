@@ -44,25 +44,27 @@ export default function HomePage() {
           borderBottom: "1px solid var(--border-main)",
         }}
       >
-        {/* 左侧朱砂竖条 + 标题 */}
-        <div
-          className="w-3 self-stretch shrink-0"
-          style={{ background: "var(--accent)" }}
-        />
-        <div className="flex items-center gap-3 px-4 py-2.5">
-          <div>
-            <div
-              className="text-xs tracking-[0.3em] uppercase mb-0.5"
-              style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
-            >
-              China City Map
+        {/* 左侧朱砂竖条 + 标题（包成一组，避免 justify-between 把标题居中） */}
+        <div className="flex items-stretch shrink-0">
+          <div
+            className="w-3 self-stretch shrink-0"
+            style={{ background: "var(--accent)" }}
+          />
+          <div className="flex items-center px-4 py-2.5">
+            <div>
+              <div
+                className="text-xs tracking-[0.3em] uppercase mb-0.5"
+                style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
+              >
+                China City Map
+              </div>
+              <h1
+                className="text-xl font-bold leading-tight tracking-wider"
+                style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
+              >
+                中国制城
+              </h1>
             </div>
-            <h1
-              className="text-xl font-bold leading-tight tracking-wider"
-              style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
-            >
-              中国制城
-            </h1>
           </div>
         </div>
 
@@ -77,7 +79,7 @@ export default function HomePage() {
               letterSpacing: "0.05em",
             }}
           >
-            by H₂O₂
+            by H2O2
           </span>
           <Toolbar
             getShareUrl={getShareUrl}
