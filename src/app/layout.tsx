@@ -10,7 +10,6 @@ import type { Metadata } from "next";
 import { Fraunces, Noto_Serif_SC, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 
-// Fraunces：editorial 风格意大利体衬线，用于英文标题装饰
 const fraunces = Fraunces({
   weight: ["300", "700", "900"],
   style: ["normal", "italic"],

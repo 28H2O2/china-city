@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-03-25 - 代码清理
+
+### 优化
+- 移除 `page.tsx` header 多余的外层 wrapper div（`flex items-center gap-0`），header 本身已是 flex 容器
+- 移除 `page.tsx` 中引用 `uzbekistan-travel.html` 和 `.eyebrow` 的设计备注注释
+- 移除 `page.tsx` 中"装饰双框"注释
+- 移除 `layout.tsx` 中 Fraunces 字体的 WHAT 注释
+
 ## 2026-03-25 - 直辖市独立区级追踪 + 样式升级
 
 ### 修复

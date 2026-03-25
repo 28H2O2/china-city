@@ -45,28 +45,24 @@ export default function HomePage() {
         }}
       >
         {/* 左侧朱砂竖条 + 标题 */}
-        <div className="flex items-center gap-0">
-          {/* 朱砂竖条（参考 uzbekistan-travel.html 的 left strip 设计） */}
-          <div
-            className="w-3 self-stretch shrink-0"
-            style={{ background: "var(--accent)" }}
-          />
-          <div className="flex items-center gap-3 px-4 py-2.5">
-            <div>
-              {/* eyebrow 小标签：参考 HTML 的 .eyebrow 样式 */}
-              <div
-                className="text-xs tracking-[0.3em] uppercase mb-0.5"
-                style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
-              >
-                China City Map
-              </div>
-              <h1
-                className="text-xl font-bold leading-tight tracking-wider"
-                style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
-              >
-                中国制城
-              </h1>
+        <div
+          className="w-3 self-stretch shrink-0"
+          style={{ background: "var(--accent)" }}
+        />
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          <div>
+            <div
+              className="text-xs tracking-[0.3em] uppercase mb-0.5"
+              style={{ color: "var(--accent)", fontFamily: "var(--font-sans), sans-serif", fontWeight: 600 }}
+            >
+              China City Map
             </div>
+            <h1
+              className="text-xl font-bold leading-tight tracking-wider"
+              style={{ fontFamily: "var(--font-serif), serif", color: "var(--text-primary)" }}
+            >
+              中国制城
+            </h1>
           </div>
         </div>
 
@@ -95,7 +91,6 @@ export default function HomePage() {
       <div className="flex flex-1 min-h-0">
         {/* 地图区域 */}
         <main className="flex-1 min-w-0 h-full relative p-3">
-          {/* 装饰双框 */}
           <div
             className="w-full h-full relative"
             style={{
