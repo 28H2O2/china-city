@@ -12,7 +12,8 @@ import type { CityLevels } from "@/types";
 
 const EXPORT_WIDTH = 2400;
 const EXPORT_HEIGHT = 1600;
-const SCALE = 2; // 物理像素倍率，最终输出 4800×3200
+// const SCALE = 2; // 物理像素倍率，最终输出 4800×3200
+const SCALE = 4;
 
 // 全部 34 个省份的 adcode
 const ALL_PROVINCE_ADCODES = PROVINCES.map((p) => p.adcode);
