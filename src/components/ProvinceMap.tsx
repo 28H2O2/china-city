@@ -48,13 +48,18 @@ export function ProvinceMap({
   const [rawGeoJson, setRawGeoJson] = useState<GeoJson | null>(null);
 
   // 过滤掉省级自身 feature（末4位为0000），只保留地级市/区级
+  // 若过滤后为空（如台湾省只有省级轮廓），则保留省级 feature 本身作为整体可点击区域
   const geojson = useMemo(() => {
     if (!rawGeoJson) return null;
-    const filtered = rawGeoJson.features.filter((f) => {
+    const validAdcode = (adcode: string) => /^\d{6}$/.test(adcode);
+    const cities = rawGeoJson.features.filter((f) => {
       const adcode = String(f.properties.adcode);
-      return /^\d{6}$/.test(adcode) && adcode !== provinceAdcode;
+      return validAdcode(adcode) && adcode !== provinceAdcode;
     });
-    return { ...rawGeoJson, features: filtered };
+    const features = cities.length > 0
+      ? cities
+      : rawGeoJson.features.filter((f) => validAdcode(String(f.properties.adcode)));
+    return { ...rawGeoJson, features };
   }, [rawGeoJson, provinceAdcode]);
 
   const { pathFn, width, height } = useD3Map(geojson, containerRef);
