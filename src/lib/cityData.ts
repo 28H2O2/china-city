@@ -484,10 +484,34 @@ export const CITIES: CityInfo[] = [
   { adcode: "712000", name: "澎湖縣", provinceAdcode: "710000" },
   { adcode: "712100", name: "金門縣", provinceAdcode: "710000" },
   { adcode: "712200", name: "連江縣", provinceAdcode: "710000" },
-  // 香港特别行政区 (1)
-  { adcode: "810000", name: "香港特别行政区", provinceAdcode: "810000" },
-  // 澳门特别行政区 (1)
-  { adcode: "820000", name: "澳门特别行政区", provinceAdcode: "820000" },
+  // 香港特别行政区 (18 区)
+  { adcode: "810001", name: "中西区", provinceAdcode: "810000" },
+  { adcode: "810002", name: "湾仔区", provinceAdcode: "810000" },
+  { adcode: "810003", name: "东区", provinceAdcode: "810000" },
+  { adcode: "810004", name: "南区", provinceAdcode: "810000" },
+  { adcode: "810005", name: "油尖旺区", provinceAdcode: "810000" },
+  { adcode: "810006", name: "深水埗区", provinceAdcode: "810000" },
+  { adcode: "810007", name: "九龙城区", provinceAdcode: "810000" },
+  { adcode: "810008", name: "黄大仙区", provinceAdcode: "810000" },
+  { adcode: "810009", name: "观塘区", provinceAdcode: "810000" },
+  { adcode: "810010", name: "荃湾区", provinceAdcode: "810000" },
+  { adcode: "810011", name: "屯门区", provinceAdcode: "810000" },
+  { adcode: "810012", name: "元朗区", provinceAdcode: "810000" },
+  { adcode: "810013", name: "北区", provinceAdcode: "810000" },
+  { adcode: "810014", name: "大埔区", provinceAdcode: "810000" },
+  { adcode: "810015", name: "西贡区", provinceAdcode: "810000" },
+  { adcode: "810016", name: "沙田区", provinceAdcode: "810000" },
+  { adcode: "810017", name: "葵青区", provinceAdcode: "810000" },
+  { adcode: "810018", name: "离岛区", provinceAdcode: "810000" },
+  // 澳门特别行政区 (8 堂区)
+  { adcode: "820001", name: "花地玛堂区", provinceAdcode: "820000" },
+  { adcode: "820002", name: "花王堂区", provinceAdcode: "820000" },
+  { adcode: "820003", name: "望德堂区", provinceAdcode: "820000" },
+  { adcode: "820004", name: "大堂区", provinceAdcode: "820000" },
+  { adcode: "820005", name: "风顺堂区", provinceAdcode: "820000" },
+  { adcode: "820006", name: "嘉模堂区", provinceAdcode: "820000" },
+  { adcode: "820007", name: "路凼填海区", provinceAdcode: "820000" },
+  { adcode: "820008", name: "圣方济各堂区", provinceAdcode: "820000" },
 ];
 
 // 按 adcode 升序排列的 adcode 数组（用于分享码编解码，顺序不可变！）
